@@ -9,13 +9,20 @@ type SigninProps = {
 const Signin: React.FC<SigninProps> = ({ booleanToggle, setUsername }) => {
   const [username, setUserInput] = useState<string>("");  
   const [password, setPassword] = useState<string>("");  
+  const passwordValidatorRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&*!])[A-Za-z\d@#$%^&*!]{8,}$/;
 
   
   const handleSubmit = () => {
     if (username && password) {
+
+      if (username.length < 5) {
+        return alert("Username must be at least 5 characters long.");
+      }
       setUsername(username);  
       booleanToggle(true);    
-    } else {
+    } 
+
+    else {
       alert("Please enter both username and password.");
     }
   };
