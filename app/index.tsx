@@ -15,7 +15,7 @@ export default function App() {
       {isLoggedIn ? (
         <Welcome username={username} />
       ) : (
-        <Signin booleanToggle={setIsLoggedIn} setUsername={setUsername} />
+        <Signin setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} />
       )}
     </View>
   );

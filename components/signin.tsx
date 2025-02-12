@@ -2,11 +2,11 @@ import { View, Text, StyleSheet, Button, TextInput } from "react-native";
 import React, { useState } from "react";
 
 type SigninProps = {
-  booleanToggle: (isLoggedIn: boolean) => void;  
+  setIsLoggedIn: (isLoggedIn: boolean) => void;  
   setUsername: (username: string) => void;       
 };
 
-const Signin: React.FC<SigninProps> = ({ booleanToggle, setUsername }) => {
+const Signin: React.FC<SigninProps> = ({ setIsLoggedIn, setUsername }) => {
   const [username, setUserInput] = useState<string>("");  
   const [password, setPassword] = useState<string>("");  
   const passwordValidatorRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&*!])[A-Za-z\d@#$%^&*!]{8,}$/;
@@ -15,11 +15,17 @@ const Signin: React.FC<SigninProps> = ({ booleanToggle, setUsername }) => {
   const handleSubmit = () => {
     if (username && password) {
 
-      if (username.length < 5) {
-        return alert("Username must be at least 5 characters long.");
+      if (username.length < 8) {
+        return alert("Username must be at least 8 characters long.");
+      }
+
+      if (passwordValidatorRegEx.test(password) === false) {
+        return (
+          <Text>Password must be at least 8 characters long and contain at least one letter, one number and one special character.</Text>
+        );
       }
       setUsername(username);  
-      booleanToggle(true);    
+      setIsLoggedIn(true);    
     } 
 
     else {
