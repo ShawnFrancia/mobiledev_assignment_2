@@ -8,7 +8,7 @@ type WelcomeProps = {
 const Welcome: React.FC<WelcomeProps> = ({ username }) => {
   return (
     <View>
-      <Text style={styles.text}>Welcome, {username}!</Text>  
+      <Text style={styles.text}>Welcome to My New App</Text>  
     </View>
   );
 };
