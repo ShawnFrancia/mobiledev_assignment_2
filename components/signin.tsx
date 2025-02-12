@@ -22,7 +22,7 @@ const Signin: React.FC<SigninProps> = ({ booleanToggle, setUsername }) => {
 
   return (
     <View style={style.container}>
-      <Text style={style.heading}>Welcome to the App</Text>
+      <Text style={style.heading}>Log in!</Text>
       <TextInput
         style={style.input}
         placeholder="Username"
