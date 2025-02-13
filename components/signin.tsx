@@ -1,35 +1,36 @@
 import { View, Text, StyleSheet, Button, TextInput } from "react-native";
 import React, { useState } from "react";
+import credentials from "../credentials.json";
 
 type SigninProps = {
-  setIsLoggedIn: (isLoggedIn: boolean) => void;  
-  setUsername: (username: string) => void;       
+  setIsLoggedIn: (isLoggedIn: boolean) => void;         
 };
 
-const Signin: React.FC<SigninProps> = ({ setIsLoggedIn, setUsername }) => {
+const Signin: React.FC<SigninProps> = ({ setIsLoggedIn }) => {
   const [username, setUserInput] = useState<string>("");  
   const [password, setPassword] = useState<string>("");  
-  const passwordValidatorRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&*!])[A-Za-z\d@#$%^&*!]{8,}$/;
-
+  const passwordValidatorRegEx = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&*!])[A-Za-z\d@#$%^&*!]{8,}$/;
+  const [errorMessage, setErrorMessage] = useState<string>("");
   
   const handleSubmit = () => {
     if (username && password) {
-
-      if (username.length < 8) {
-        return alert("Username must be at least 8 characters long.");
-      }
-
       if (passwordValidatorRegEx.test(password) === false) {
-        return (
-          <Text>Password must be at least 8 characters long and contain at least one letter, one number and one special character.</Text>
-        );
-      }
-      setUsername(username);  
-      setIsLoggedIn(true);    
-    } 
-
+        return setErrorMessage("Password must be at least 8 characters long and contain at least one uppercase, one lowercase, one number, and one special character.");
+      } else if (username.length < 5) {
+        return setErrorMessage("Username must be at least 5 characters long.");
+      } else {
+          const user = credentials.users.find(
+            (user) => user.username === username && user.password === password
+          );
+          if (!user) {
+            return setErrorMessage("Invalid username or password.");
+          } else {
+            setIsLoggedIn(true);
+          }
+        }
+      }    
     else {
-      alert("Please enter both username and password.");
+      setErrorMessage("Please enter a username and password.");
     }
   };
 
@@ -49,6 +50,7 @@ const Signin: React.FC<SigninProps> = ({ setIsLoggedIn, setUsername }) => {
         onChangeText={setPassword}  
         secureTextEntry  
       />
+      {errorMessage ? <Text>{errorMessage}</Text> : null}    
       <Button color="purple" title="Login" onPress={handleSubmit}/>  
     </View>
   );

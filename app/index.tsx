@@ -7,15 +7,14 @@ import { useState } from "react";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [username, setUsername] = useState<string>("");
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       {isLoggedIn ? (
-        <Welcome username={username} />
+        <Welcome />
       ) : (
-        <Signin setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} />
+        <Signin setIsLoggedIn={setIsLoggedIn}/>
       )}
     </View>
   );
@@ -26,15 +25,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#f5f5f5',
-  },
-  link: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#007bff',
-    color: '#fff',
-    borderRadius: 5,
-    textAlign: 'center',
   },
 });
